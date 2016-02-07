@@ -216,7 +216,7 @@ activity &lt;- read.csv(&quot;activity.csv&quot;)
 #summary(activity)
 </code></pre>
 
-<h2>What is mean total number of steps taken per day?</h2>
+<h2>What is the mean total number of steps taken per day?</h2>
 
 <p>Calculate the total number of steps taken per day:</p>
 
@@ -224,7 +224,7 @@ activity &lt;- read.csv(&quot;activity.csv&quot;)
 meanSteps &lt;- aggregate(steps ~ date, data=activity, FUN=mean)
 </code></pre>
 
-<h2>Make a histogram of the total number of steps taken each day</h2>
+<p>Make a histogram of the total number of steps taken each day</p>
 
 <pre><code class="r">hist(sumSteps$steps,xlab=&quot;Total number of steps taken each day&quot;, main=&quot;Histogram of the total number of steps taken/day&quot;)
 </code></pre>
@@ -237,7 +237,7 @@ dev.copy(png, file = &quot;sumStepsHist.png&quot;)
 dev.off()
 </code></pre>
 
-<h2>Calculate and report the mean and median of the total number of steps taken per day:</h2>
+<p>Calculate and report the mean and median of the total number of steps taken per day:</p>
 
 <pre><code class="r">smean &lt;- mean(sumSteps$steps)
 smedian &lt;- median(sumSteps$steps)
@@ -270,7 +270,7 @@ dev.copy(png, file = &quot;meanStepsPerInterval.png&quot;)
 dev.off()
 </code></pre>
 
-<h2>Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h2>
+<p>Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</p>
 
 <pre><code class="r">rowmax&lt;- which(meanStepsPerInterval$meanSteps==max(meanStepsPerInterval$meanSteps))
 paste(&quot;The maximum 5-minute intervalaverage across all the days number of steps is&quot;, meanStepsPerInterval[rowmax, 1], &quot;with the value of&quot;, meanStepsPerInterval[rowmax, 2])
@@ -290,9 +290,8 @@ nrow(missingRow)
 <pre><code>## [1] 2304
 </code></pre>
 
-<h2>Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.</h2>
-
-<p>Using the meanSteps values to fill out the NA values,
+<p>####Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+Using the meanSteps values to fill out the NA values,
 Create a new dataset that is equal to the original dataset but with the missing data filled in.</p>
 
 <pre><code class="r">filledActivity &lt;- activity
@@ -301,7 +300,7 @@ for (i in 1:nrow(filledActivity)) {
     filledActivity$steps[i] &lt;- meanSteps$steps[filledActivity$date[i]] }}
 </code></pre>
 
-<h2>Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</h2>
+<p>Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</p>
 
 <pre><code class="r">filledSumSteps &lt;- aggregate(steps ~ date, data=filledActivity, FUN=sum)
 
@@ -360,7 +359,7 @@ levels(WeekDay) &lt;- c(&quot;weekday&quot;,&quot;weekend&quot;)
 filledActivity &lt;- cbind(filledActivity,WeekDay)
 </code></pre>
 
-<h2>Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.</h2>
+<p>Make a panel plot containing a time series plot (i.e. type = &ldquo;l&rdquo;) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.</p>
 
 <pre><code class="r">WeekdayMean &lt;- aggregate(steps ~ interval + WeekDay, data=filledActivity, FUN=mean)
 names(WeekdayMean) &lt;- c(&quot;interval&quot;,&quot;WeekDay&quot;, &quot;meanSteps&quot;)
