@@ -1,0 +1,3 @@
+setwd("~/Coursera/Reproducible_Research/Week1/RepData_PeerAssessment1")
+library(knitr)
+knit2html('PA1_template.Rmd', force_v1 = TRUE)
