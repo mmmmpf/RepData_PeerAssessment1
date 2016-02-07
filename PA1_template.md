@@ -1,10 +1,6 @@
 "Reproducible Research: Peer Assessment 1"
 ==========================================
----
-output: 
-  html_document:
-    keep_md: true
----
+
 ## Loading and preprocessing the data
 
 ```r
@@ -18,7 +14,7 @@ activity <- read.csv("activity.csv")
 #str(activity)
 #summary(activity)
 ```
-## What is the mean total number of steps taken per day?
+## What is mean total number of steps taken per day?
 Calculate the total number of steps taken per day:
 
 ```r
@@ -75,7 +71,7 @@ paste("The median of the total number of steps taken per day is", as.character(s
 ```
 
 ## What is the average daily activity pattern?
-Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+Make a time series plot (i.e. ???????????????? = "????") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```r
 meanStepsPerInterval <- aggregate(activity$steps, list(interval=activity$interval), FUN = mean, na.rm=TRUE)
@@ -117,7 +113,7 @@ paste("The maximum 5-minute intervalaverage across all the days number of steps 
 ```
 
 ## Imputing missing values
-Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NA's)
 
 ```r
 missingRow <- activity[is.na(activity$steps),] #df that contains only the NA rows of activity$steps
@@ -127,17 +123,17 @@ nrow(missingRow)
 ```
 ## [1] 2304
 ```
-Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
+#Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 Using the meanSteps values to fill out the NA values,
 Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```r
 filledActivity <- activity
 for (i in 1:nrow(filledActivity)) {
-    if (is.na(filledActivity$steps[i])) {
-        filledActivity$steps[i] <- meanSteps$steps[filledActivity$date[i]] }}
+  if (is.na(filledActivity$steps[i])) {
+    filledActivity$steps[i] <- meanSteps$steps[filledActivity$date[i]] }}
 ```
-Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+#Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 ```r
 filledSumSteps <- aggregate(steps ~ date, data=filledActivity, FUN=sum)
@@ -187,7 +183,7 @@ paste("The filledSmedian of the total number of steps taken per day is", as.char
 we can see that there is a slight difference in "filledSumSteps" and "sumSteps", where the first has lower mean and median. More detailed difference can also be observed using the summary func:
 
 ```r
-summary(filledSumSteps) 
+summary(filledSumSteps)
 ```
 
 ```
@@ -218,20 +214,20 @@ summary(sumSteps)
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
-Create a new factor variable in the dataset with two levels "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
-
+Create a new factor variable in the dataset with two levels ??? ???weekday??? and ???weekend??? indicating whether a given date is a weekday or weekend day.
 
 ```r
 WeekDay <- factor(weekdays(as.Date(filledActivity$date)) %in% c("Sunday","Saturday"))
 levels(WeekDay) <- c("weekday","weekend")
 filledActivity <- cbind(filledActivity,WeekDay)
 ```
-Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+#Make a panel plot containing a time series plot (i.e. ???????????????? = "????") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 ```r
 WeekdayMean <- aggregate(steps ~ interval + WeekDay, data=filledActivity, FUN=mean)
 names(WeekdayMean) <- c("interval","WeekDay", "meanSteps")
 
+library(lattice)
 xyplot(meanSteps ~ interval | WeekDay, data = WeekdayMean, layout = c(1, 2), type="l", xlab="5-minute interval", ylab="Mean number of steps",  main="Mean number of steps")
 ```
 
@@ -256,4 +252,3 @@ dev.off()
 ## quartz_off_screen 
 ##                 2
 ```
-
